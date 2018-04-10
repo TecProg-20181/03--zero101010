@@ -1,20 +1,19 @@
 import random
 import string
 
-
+#load the file words in 
 def loadWords():
     WORDLIST_FILENAME = "palavras.txt" #put the wordlist inside the method 
     print( "Loading word list from file...")
-    #inFile = open(WORDLIST_FILENAME, 'r')  #perguntar mudança
-    line = open(WORDLIST_FILENAME, 'r').readline()
+    inFile = open(WORDLIST_FILENAME, 'r')  #perguntar mudança
+    line = inFile.readline()
     wordlist = str.split(line)#ver se n se pode mudar line
     print ("  ", len(wordlist), "words loaded.")
     return random.choice(wordlist)
 
 
 def isWordGuessed(secretWord, lettersGuessed):
-    secretLetters = []
-    
+  #  secretLetters = []
     for letter in secretWord:
         if letter in lettersGuessed:
             pass
@@ -24,14 +23,11 @@ def isWordGuessed(secretWord, lettersGuessed):
     return True
 
 def getGuessedWord():
-
-     guessed = ''
-
-
-     return guessed
+    guessed = ''
+    return guessed
 
 def getAvailableLetters():
-    import string
+    #import string
     # 'abcdefghijklmnopqrstuvwxyz'
     available = string.ascii_lowercase
 
