@@ -13,7 +13,8 @@ def loadWords():
 
 
 def isWordGuessed(secretWord, lettersGuessed):
-  #  secretLetters = []
+   # secretLetters = []
+    
     for letter in secretWord:
         if letter in lettersGuessed:
             pass
@@ -21,10 +22,13 @@ def isWordGuessed(secretWord, lettersGuessed):
             return False
 
     return True
-
+'''
 def getGuessedWord():
-    guessed = ''
-    return guessed
+
+     guessed = ''
+
+
+     return guessed
 
 def getAvailableLetters():
     #import string
@@ -34,27 +38,36 @@ def getAvailableLetters():
 
     return available
 
+def teste():
+    available = string.ascii_lowercase
+    lettersGuessed = []
+    for letter in available:
+            if letter in lettersGuessed:
+                available = available.replace(letter, '')
+    
+    return available
+'''
 def hangman(secretWord):
-
+    #available = string.ascii_lowercase
     guesses = 8
     lettersGuessed = []
     print( 'Welcome to the game, Hangam!')
     print('I am thinking of a word that is', len(secretWord), ' letters long.')
     print ('-------------')
 
-    while  isWordGuessed(secretWord, lettersGuessed) == False and guesses >0:
+    while  isWordGuessed(secretWord, lettersGuessed) == False and guesses >0:#tentar arrumar com outra variavel ao invés de passar o método
         print ('You have ', guesses, 'guesses left.')
 
-        available = getAvailableLetters()
+        available = string.ascii_lowercase
         for letter in available:
             if letter in lettersGuessed:
-                available = available.replace(letter, '')
-
+               available = available.replace(letter, '')
+        #available=teste()
         print ('Available letters', available)
         letter = input('Please guess a letter: ')
         if letter in lettersGuessed:
 
-            guessed = getGuessedWord()
+            guessed = ''
             for letter in secretWord:
                 if letter in lettersGuessed:
                     guessed += letter
@@ -65,7 +78,7 @@ def hangman(secretWord):
         elif letter in secretWord:
             lettersGuessed.append(letter)
 
-            guessed = getGuessedWord()
+            guessed = ''
             for letter in secretWord:
                 if letter in lettersGuessed:
                     guessed += letter
@@ -77,7 +90,7 @@ def hangman(secretWord):
             guesses -=1
             lettersGuessed.append(letter)
 
-            guessed = getGuessedWord()
+            guessed = ''
             for letter in secretWord:
                 if letter in lettersGuessed:
                     guessed += letter
