@@ -22,6 +22,18 @@ def isWordGuessed(secretWord, lettersGuessed):
             return False
 
     return True
+
+def letter_guessed_again(letter,guessed,lettersGuessed):
+    #lettersGuessed = []
+   
+    for letter in secretWord:
+        if letter in lettersGuessed:
+            guessed += letter
+        else:
+            guessed += '_ '
+    print('Oops! You have already guessed that letter: ', guessed)
+   
+
 '''
 def getGuessedWord():
 
@@ -38,7 +50,7 @@ def getAvailableLetters():
 
     return available
 
-def teste():
+def teste(letter):
     available = string.ascii_lowercase
     lettersGuessed = []
     for letter in available:
@@ -61,20 +73,23 @@ def hangman(secretWord):
         available = string.ascii_lowercase
         for letter in available:
             if letter in lettersGuessed:
-               available = available.replace(letter, '')
+                available = available.replace(letter, '')
         #available=teste()
         print ('Available letters', available)
         letter = input('Please guess a letter: ')
         if letter in lettersGuessed:
-
             guessed = ''
+            letter_guessed_again(letter,guessed,lettersGuessed)
+            
+            '''
             for letter in secretWord:
                 if letter in lettersGuessed:
                     guessed += letter
                 else:
                     guessed += '_ '
-
+            
             print('Oops! You have already guessed that letter: ', guessed)
+            '''
         elif letter in secretWord:
             lettersGuessed.append(letter)
 
