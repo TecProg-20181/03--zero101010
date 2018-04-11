@@ -3,13 +3,22 @@ import string
 
 #load the file words in 
 def loadWords():
-    WORDLIST_FILENAME = "words.txt" #put the wordlist inside the method 
+    WORDLIST_FILENAME = "palavras.txt" #put the wordlist inside the method 
     print( "Loading word list from file...")
     inFile = open(WORDLIST_FILENAME, 'r')  #perguntar mudança
     line = inFile.readline()
     wordlist = str.split(line)#ver se n se pode mudar line
     print ("  ", len(wordlist), "words loaded.")
     return random.choice(wordlist)
+
+def verify_letter_word(secretWord,lettersGuessed,guessed):
+
+    for letter in secretWord:
+        if letter in lettersGuessed:
+            guessed += letter
+        else:
+            guessed += '_ '
+    return guessed
 
 def count_diferent_letters(available,secretWord):
     for letter in available:
@@ -36,36 +45,42 @@ def isWordGuessed(secretWord, lettersGuessed):
     return True
 
 def letter_guessed_again(letter,guessed,lettersGuessed):
-
+    '''
     for letter in secretWord:
         if letter in lettersGuessed:
             guessed += letter
         else:
             guessed += '_ '
+        '''
+    guessed=verify_letter_word(secretWord,lettersGuessed,guessed)
     print('Oops! You have already guessed that letter: ', guessed)
    
 def letter_good_guessed(letter,lettersGuessed):
     lettersGuessed.append(letter)   
     guessed = ''
+    '''
     for letter in secretWord:
         if letter in lettersGuessed:
             guessed += letter
         else:
             guessed += '_ '
-
+    '''
+    guessed=verify_letter_word(secretWord,lettersGuessed,guessed)
     print( 'Good Guess: ', guessed)
 
 def letter_wrong_guessed(letter,lettersGuessed):
     
     lettersGuessed.append(letter)
-
+   
     guessed = ''
+    '''
     for letter in secretWord:
         if letter in lettersGuessed:
             guessed += letter
         else:
             guessed += '_ '
-
+    '''
+    guessed=verify_letter_word(secretWord,lettersGuessed,guessed)
     print ('Oops! That letter is not in my word: ',  guessed)
     
 
