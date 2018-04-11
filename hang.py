@@ -33,6 +33,16 @@ def letter_guessed_again(letter,guessed,lettersGuessed):
             guessed += '_ '
     print('Oops! You have already guessed that letter: ', guessed)
    
+def letter_good_guessed(letter,lettersGuessed):
+    lettersGuessed.append(letter)   
+    guessed = ''
+    for letter in secretWord:
+        if letter in lettersGuessed:
+            guessed += letter
+        else:
+            guessed += '_ '
+
+    print( 'Good Guess: ', guessed)
 
 '''
 def getGuessedWord():
@@ -91,8 +101,9 @@ def hangman(secretWord):
             print('Oops! You have already guessed that letter: ', guessed)
             '''
         elif letter in secretWord:
-            lettersGuessed.append(letter)
-
+            letter_good_guessed(letter,lettersGuessed)
+            '''
+            lettersGuessed.append(letter)   
             guessed = ''
             for letter in secretWord:
                 if letter in lettersGuessed:
@@ -101,6 +112,7 @@ def hangman(secretWord):
                     guessed += '_ '
 
             print( 'Good Guess: ', guessed)
+        '''
         else:
             guesses -=1
             lettersGuessed.append(letter)
