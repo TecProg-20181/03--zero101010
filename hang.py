@@ -44,6 +44,20 @@ def letter_good_guessed(letter,lettersGuessed):
 
     print( 'Good Guess: ', guessed)
 
+def letter_wrong_guessed(letter,lettersGuessed):
+    
+    lettersGuessed.append(letter)
+
+    guessed = ''
+    for letter in secretWord:
+        if letter in lettersGuessed:
+            guessed += letter
+        else:
+            guessed += '_ '
+
+    print ('Oops! That letter is not in my word: ',  guessed)
+    
+
 '''
 def getGuessedWord():
 
@@ -115,6 +129,9 @@ def hangman(secretWord):
         '''
         else:
             guesses -=1
+            letter_wrong_guessed(letter,lettersGuessed)
+            
+            '''
             lettersGuessed.append(letter)
 
             guessed = ''
@@ -125,8 +142,9 @@ def hangman(secretWord):
                     guessed += '_ '
 
             print ('Oops! That letter is not in my word: ',  guessed)
+            '''
         print ('------------')
-
+            
     else:
         if isWordGuessed(secretWord, lettersGuessed) == True:
             print ('Congratulations, you won!')
