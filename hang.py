@@ -1,5 +1,6 @@
 import random
 import string
+from docutils.writers.odf_odt import WORD_SPLIT_PAT1
 
 #load the file words in 
 def loadWords():
@@ -8,9 +9,26 @@ def loadWords():
     inFile = open(WORDLIST_FILENAME, 'r')  #perguntar mudança
     line = inFile.readline()
     wordlist = str.split(line)#ver se n se pode mudar line
-    print ("  ", len(wordlist), "words loaded.")
-    return random.choice(wordlist)
+    print (len(wordlist), "words loaded.")
+    random_word=random.choice(wordlist)
+    #print(random_word)
+    random_word=change_word(random_word,wordlist)
 
+    '''
+    available = string.ascii_lowercase
+    while count_different_letters(available,random_word)>8:
+        random_word=random.choice(wordlist)
+    '''
+    return random_word
+
+def change_word(random_word,wordlist):
+    available = string.ascii_lowercase
+    while count_different_letters(available,random_word)>8:
+        random_word=random.choice(wordlist)
+        #print ('changed')
+    else:
+        return random_word
+          
 def verify_letter_word(secretWord,lettersGuessed,guessed):
 
     for letter in secretWord:
@@ -20,12 +38,14 @@ def verify_letter_word(secretWord,lettersGuessed,guessed):
             guessed += '_ '
     return guessed
 
-def count_diferent_letters(available,secretWord):
+def count_different_letters(available,secretWord):
     for letter in available:
         if letter in secretWord:
             available = available.replace(letter, '')
-    print ('This word have ',26-len(available),'diferent letters')
-
+            
+    different_words=26-len(available)
+    #print ('This word have ',different_words,'different letters')
+    return different_words
 def count_letters(available,lettersGuessed):
   
     for letter in available:
@@ -91,7 +111,8 @@ def hangman(secretWord):
     
     print( 'Welcome to the game, Hangam!')
     print('I am thinking of a word that is', len(secretWord), ' letters long.')
-    count_diferent_letters(available,secretWord)
+    different_words = count_different_letters(available,secretWord)
+    print ('This word have ',different_words,'different letters')
     print ('-------------')
     
     
