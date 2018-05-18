@@ -34,7 +34,7 @@ class Words(object):
     def load_words(self):
 
         list_of_words = "palavras.txt"
-        #logging.debug("Loading word list from file...")
+        print("Loading word list from file...")
         load_file = open(list_of_words, 'r')
         line = load_file.readline()
         word_list = str.split(line)
