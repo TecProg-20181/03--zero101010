@@ -1,21 +1,22 @@
 import random
 import string
+import logging
 
-def error_params_none(param,msg):
-    assert param !=None,msg 
-def error_params_type(param,type_param,msg):
-    assert type(param)!=type_param,msg 
+
+
+def apply_asserts(param,type_param,msg_none,msg_type):
+    
+    assert param !=None,msg_none 
+    assert type(param)!=type_param,msg_type 
 
 
 class Words(object):
 
     def word_different_letters(self, available, secretWord):
         
-        error_params_none(available,"available recebe nulo")
-        error_params_type(available,string,"available não é String")
-        error_params_none(secretWord,"secretWord recebe nulo")
-        error_params_type(secretWord,string,"secretWord não é String")
-
+        apply_asserts(available,string,"available recebe nulo","available não é String")
+        apply_asserts(secretWord,string,"secretWord recebe nulo","secretWord não é String")
+       
         for letter in available:
             if letter in secretWord:
                 available = available.replace(letter, '')
@@ -24,10 +25,8 @@ class Words(object):
 
     def change_word(self, random_word, word_list):
         
-        error_params_none(random_word,"random_word está recebendo nulo")
-        error_params_type(random_word,string,"random_word não é String")
-        error_params_none(word_list,"word_list recebe nulo")
-        error_params_type(word_list,string,"word_list não é String")
+        apply_asserts(random_word,string,"available recebe nulo","random_word não é String")
+        apply_asserts(word_list,string,"word_list recebe nulo","word_list não é String")
 
         available = string.ascii_lowercase
         while self.word_different_letters(available, random_word) > 8:
@@ -37,24 +36,22 @@ class Words(object):
 
     
     def load_words(self):
-
+        logging.basicConfig(filename = 'teste.log',level=logging.DEBUG)
         list_of_words = "palavras.txt"
-        #print("Loading word list from file...")
+        logging.debug("Loading word list from file...")
         load_file = open(list_of_words, 'r')
         line = load_file.readline()
         word_list = str.split(line)
-        print(len(word_list), "words loaded.")
+        logging.debug(len(word_list), "words loaded.")
         choice_word = random.choice(word_list)
         random_word = self.change_word(choice_word, word_list)
         return random_word
 
     def isWordGuessed(self, secretWord, lettersGuessed):
-        
-        error_params_none(secretWord,"secretWord está recebendo nulo")
-        error_params_type(secretWord,string,"secretWord não é String")
-        error_params_none(lettersGuessed,"lettersGuessed recebe nulo")
-        error_params_type(lettersGuessed,string,"lettersGuessed não é String")        
 
+        apply_asserts(secretWord,string,"secretWord recebe nulo","secretWord não é String")
+        apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")
+             
         for letter in secretWord:
             if letter in lettersGuessed:
                 pass
@@ -66,13 +63,10 @@ class Words(object):
 class Letters(object):
 
     def check_letter_word(self, secretWord, lettersGuessed, guessed):
-
-        error_params_none(secretWord,"secretWord está recebendo nulo")
-        error_params_type(secretWord,string,"secretWord não é String")
-        error_params_none(lettersGuessed,"lettersGuessed recebe nulo")
-        error_params_type(lettersGuessed,string,"lettersGuessed não é String")  
-        error_params_none(guessed,"guessed recebe nulo")
-        error_params_type(guessed,string,"guessed não é String") 
+      
+        apply_asserts(secretWord,string,"secretWord recebe nulo","secretWord não é String")
+        apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")
+        apply_asserts(guessed,string,"guessed recebe nulo","guessed não é String")
 
         for letter in secretWord:
             if letter in lettersGuessed:
@@ -83,11 +77,8 @@ class Letters(object):
 
     def count_letters(self, available, lettersGuessed):
 
-        error_params_none(available,"available está recebendo nulo")
-        error_params_type(available,string,"available não é String")
-        error_params_none(lettersGuessed,"lettersGuessed recebe nulo")
-        error_params_type(lettersGuessed,string,"lettersGuessed não é String")  
-
+        apply_asserts(available,string,"available recebe nulo","available não é String")
+        apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")  
 
         for letter in available:
             if letter in lettersGuessed:
@@ -97,10 +88,8 @@ class Letters(object):
 
     def letter_guessed_again(self, guessed, lettersGuessed):
 
-        error_params_none(lettersGuessed,"lettersGuessed recebe nulo")
-        error_params_type(lettersGuessed,string,"lettersGuessed não é String")  
-        error_params_none(guessed,"guessed recebe nulo")
-        error_params_type(guessed,string,"guessed não é String") 
+        apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")  
+        apply_asserts(guessed,string,"guessed recebe nulo","guessed não é String")
 
 
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
@@ -108,23 +97,18 @@ class Letters(object):
 
     def letter_good_guessed(self, letter, lettersGuessed):
 
-        error_params_none(lettersGuessed,"lettersGuessed recebe nulo")
-        error_params_type(lettersGuessed,string,"lettersGuessed não é String")  
-        error_params_none(letter,"letter recebe nulo")
-        error_params_type(letter,string,"letter não é String") 
+        apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")  
+        apply_asserts(letter,string,"letter recebe nulo","letter não é String")
 
-        
         lettersGuessed.append(letter)
         guessed = ''
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Good Guess: ', guessed)
 
     def letter_wrong_guessed(self, letter, lettersGuessed):
-
-        error_params_none(lettersGuessed,"lettersGuessed recebe nulo")
-        error_params_type(lettersGuessed,string,"lettersGuessed não é String")  
-        error_params_none(letter,"letter recebe nulo")
-        error_params_type(letter,string,"letter não é String") 
+        
+        apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")  
+        apply_asserts(letter,string,"letter recebe nulo","letter não é String")
 
         lettersGuessed.append(letter)
         guessed = ''
@@ -134,8 +118,7 @@ class Letters(object):
 
 def hangman(secretWord):
 
-    error_params_none(secretWord,"secretWord está recebendo nulo")
-    error_params_type(secretWord,string,"secretWord não é String")
+    apply_asserts(secretWord,string,"secretWord recebe nulo","secretWord não é String")
     
     available = string.ascii_lowercase
     guesses = 8
