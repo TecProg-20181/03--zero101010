@@ -1,5 +1,6 @@
 import random
 import string
+import re
 
 
 class Words(object):
@@ -42,8 +43,6 @@ class Words(object):
                 return False
         return True
 
-# change the word if the word has more than 8 different letters
-
 
 class Letters(object):
 
@@ -55,7 +54,7 @@ class Letters(object):
             else:
                 guessed += '_ '
         return guessed
-    # count how many different letters has in a word
+   
 
     def count_letters(self, available, lettersGuessed):
 
@@ -69,7 +68,6 @@ class Letters(object):
 
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Oops! You have already guessed that letter: ', guessed)
-    # letter that was in the secret word
 
     def letter_good_guessed(self, letter, lettersGuessed):
         lettersGuessed.append(letter)
@@ -77,7 +75,6 @@ class Letters(object):
 
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Good Guess: ', guessed)
-    # letter that wasn't in the secret word
 
     def letter_wrong_guessed(self, letter, lettersGuessed):
 
@@ -88,7 +85,8 @@ class Letters(object):
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Oops! That letter is not in my word: ',  guessed)
 
-# call the methods
+   # def validation_alphabetic_letter(self,lettersGuessed):
+        
 
 
 def hangman(secretWord):
@@ -97,6 +95,7 @@ def hangman(secretWord):
     lettersGuessed = []
     letters = Letters()
     words = Words()
+    alphabetic_letters='abcdefghijklmnopqrstuvxyz'
 
     print('Welcome to the game, Hangam!')
     print('I am thinking of a word that is', len(secretWord), ' letters long.')
@@ -104,7 +103,7 @@ def hangman(secretWord):
     print('This word have ', different_words, 'different letters')
     print('-------------')
 
-    # tentar arrumar com outra variavel ao invés de passar o método
+   
     while words.isWordGuessed(secretWord, lettersGuessed) == False and guesses > 0:
         print('You have ', guesses, 'guesses left.')
 
@@ -117,6 +116,9 @@ def hangman(secretWord):
             letters.letter_guessed_again(guessed, lettersGuessed)
         elif letter in secretWord:
             letters.letter_good_guessed(letter, lettersGuessed)
+                      
+        elif letter not in alphabetic_letters:
+            print("this is not a letter,try again with letters")   
         else:
             guesses -= 1
             letters.letter_wrong_guessed(letter, lettersGuessed)
