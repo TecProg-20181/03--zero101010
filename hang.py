@@ -2,13 +2,10 @@ import random
 import string
 import logging
 
-
-
 def apply_asserts(param,type_param,msg_none,msg_type):
     
     assert param !=None,msg_none 
     assert type(param)!=type_param,msg_type 
-
 
 class Words(object):
 
@@ -34,11 +31,10 @@ class Words(object):
         else:
             return random_word
 
-    
     def load_words(self):
 
         list_of_words = "palavras.txt"
-        #print("Loading word list from file...")
+        logging.debug("Loading word list from file...")
         load_file = open(list_of_words, 'r')
         line = load_file.readline()
         word_list = str.split(line)
@@ -90,7 +86,6 @@ class Letters(object):
 
         apply_asserts(lettersGuessed,string,"lettersGuessed recebe nulo","lettersGuessed não é String")  
         apply_asserts(guessed,string,"guessed recebe nulo","guessed não é String")
-
 
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Oops! You have already guessed that letter: ', guessed)
@@ -144,6 +139,7 @@ def hangman(secretWord):
 
         letter = input('Please guess a letter: ')
         letter= letter.lower()
+        
         logging.debug("Enter with the letter ")
         
         if letter not in string.ascii_letters:
@@ -153,13 +149,16 @@ def hangman(secretWord):
         elif letter in jumpline:
             print("write something")
             logging.debug("The letter is Null")
+        
         elif letter in lettersGuessed:
             guessed = ''
             letters.letter_guessed_again(guessed, lettersGuessed)
             logging.debug("The letter was written")
+        
         elif letter in secretWord and letter != None:
             letters.letter_good_guessed(letter, lettersGuessed)
             logging.debug("The letter is in the word")
+        
         else:
             guesses -= 1
             letters.letter_wrong_guessed(letter, lettersGuessed)
@@ -170,10 +169,13 @@ def hangman(secretWord):
         if words.isWordGuessed(secretWord, lettersGuessed) == True:
             print('Congratulations, you won!')
             logging.debug("The player won")
+        
         else:
             print('Sorry, you ran out of guesses. The word was ', secretWord, '.')
             logging.debug("The player lose ")
+    
     logging.debug("finish the program")
+
 words = Words()
 secretWord = words.load_words().lower()
 hangman(secretWord)
