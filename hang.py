@@ -1,15 +1,14 @@
 import random
 import string
-import re
 
 
 class Words(object):
+
     def word_different_letters(self, available, secretWord):
 
         for letter in available:
             if letter in secretWord:
                 available = available.replace(letter, '')
-
         different_words = 26-len(available)
         return different_words
 
@@ -25,13 +24,13 @@ class Words(object):
     def loadWords(self):
 
         list_of_words = "palavras.txt"
-        print("Loading word list from file...")
+        #print("Loading word list from file...")
         load_file = open(list_of_words, 'r')
         line = load_file.readline()
         word_list = str.split(line)
         print(len(word_list), "words loaded.")
-        random_word = random.choice(word_list)
-        random_word = self.change_word(random_word, word_list)
+        choice_word = random.choice(word_list)
+        random_word = self.change_word(choice_word, word_list)
         return random_word
 
     def isWordGuessed(self, secretWord, lettersGuessed):
@@ -54,7 +53,6 @@ class Letters(object):
             else:
                 guessed += '_ '
         return guessed
-   
 
     def count_letters(self, available, lettersGuessed):
 
@@ -70,23 +68,18 @@ class Letters(object):
         print('Oops! You have already guessed that letter: ', guessed)
 
     def letter_good_guessed(self, letter, lettersGuessed):
+        
         lettersGuessed.append(letter)
         guessed = ''
-
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Good Guess: ', guessed)
 
     def letter_wrong_guessed(self, letter, lettersGuessed):
 
         lettersGuessed.append(letter)
-
         guessed = ''
-
         guessed = self.check_letter_word(secretWord, lettersGuessed, guessed)
         print('Oops! That letter is not in my word: ',  guessed)
-
-   # def validation_alphabetic_letter(self,lettersGuessed):
-        
 
 
 def hangman(secretWord):
@@ -95,7 +88,8 @@ def hangman(secretWord):
     lettersGuessed = []
     letters = Letters()
     words = Words()
-    alphabetic_letters='abcdefghijklmnopqrstuvxyz'
+    alphabetic_letters = string.ascii_letters
+    jumpline='\n'
 
     print('Welcome to the game, Hangam!')
     print('I am thinking of a word that is', len(secretWord), ' letters long.')
@@ -103,22 +97,26 @@ def hangman(secretWord):
     print('This word have ', different_words, 'different letters')
     print('-------------')
 
-   
     while words.isWordGuessed(secretWord, lettersGuessed) == False and guesses > 0:
         print('You have ', guesses, 'guesses left.')
 
         letters.count_letters(available, lettersGuessed)
 
         letter = input('Please guess a letter: ')
+        letter= letter.lower()
+        if letter not in alphabetic_letters:
+            print("This is not a letter,try again with letters")
+        
+        elif letter in jumpline:
+            print("write something")
 
-        if letter in lettersGuessed:
+        elif letter in lettersGuessed:
             guessed = ''
             letters.letter_guessed_again(guessed, lettersGuessed)
-        elif letter in secretWord:
+        
+        elif letter in secretWord and letter != None:
             letters.letter_good_guessed(letter, lettersGuessed)
-                      
-        elif letter not in alphabetic_letters:
-            print("this is not a letter,try again with letters")   
+
         else:
             guesses -= 1
             letters.letter_wrong_guessed(letter, lettersGuessed)
